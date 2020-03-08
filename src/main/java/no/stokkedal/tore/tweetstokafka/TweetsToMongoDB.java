@@ -47,13 +47,14 @@ public class TweetsToMongoDB {
 	public void addRecord(String record) throws Exception {
 		log.info("Entering add record");
 		try {
-			connectParameters();
+			// connectParameters();
 			Document doc = new Document(Document.parse(record));
 			collection.insertOne(doc);
 			log.info("Inserted tweet to Mongo" + doc.toString());
 		} catch (Exception e) {
-			log.error("Error insering record: " + e.getMessage());
+			log.error("Error insering record: " + e.getMessage() + " throwing exception");
 			e.printStackTrace();
+			throw e;
 		}
 		log.info("Leaving add record");
 	}

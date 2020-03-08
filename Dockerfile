@@ -16,4 +16,4 @@ CMD java -jar TweetsKafkaToMongo-0.1.jar
 # to build; docker build . -t k2m
 #           podman build . -t k2m
 # to run: docker run  -name k2m k2m
-#         podman run  -d --name k2m k2m
+#         podman run  -d --add-host rhel1.local:192.168.39.249 --name k2m k2m

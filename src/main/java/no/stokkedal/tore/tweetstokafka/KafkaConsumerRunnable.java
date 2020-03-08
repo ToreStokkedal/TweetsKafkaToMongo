@@ -91,7 +91,7 @@ public class KafkaConsumerRunnable implements Runnable {
 	 */
 	public void shutdown() {
 		// interrupt consumer.poll
-		// It will throw a WakeUp Exception and disrupt the while(true) below
+		// It will throw a WakeUp Exception and disrupt the while(true) above
 		logger.info("In Shutdown!");
 		consumer.wakeup();	
 	}

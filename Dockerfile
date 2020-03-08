@@ -8,12 +8,12 @@ COPY /target/TweetsKafkaToMongo-0.1.jar /TweetsKafkaToMongo-0.1.jar
 COPY /target/lib/* /lib/
 COPY ./startservices.sh /startservices.sh
 
-# stat the services in the image
+# stat the services in the image (moved from startservices.sh to Java directly)
 CMD java -jar TweetsKafkaToMongo-0.1.jar
 
 # Copy to rhel1
 # scp -r ./* tores@rhel1.local:./TweetsKafkaToMongo
 # to build; docker build . -t k2m
 #           podman build . -t k2m
-# to run: docker run --add-host rhel1.local:192.168.39.249 --name k2m k2m
+# to run: docker run  -name k2m k2m
 #         podman run  -d --name k2m k2m

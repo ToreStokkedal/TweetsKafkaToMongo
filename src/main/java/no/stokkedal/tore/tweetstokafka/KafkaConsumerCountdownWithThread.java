@@ -35,7 +35,7 @@ public class KafkaConsumerCountdownWithThread {
 	
 	public void run(String bootStrapServer, String groupID, String topic ) {
 		
-		logger.info("Entering with bootstrap; " + bootStrapServer + ", GroupIDb - applicationID" + "; " + groupID + ", topic; " + topic);
+		logger.info("Entering with bootstrap; " + bootStrapServer + ", GroupID - applicationID" + "; " + groupID + ", topic; " + topic);
 
 		// Dealing with multiple threads
 		CountDownLatch latch = new CountDownLatch(1);

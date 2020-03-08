@@ -1,4 +1,4 @@
-package no.stokkedal.tore.TweetsToKafka;
+package no.stokkedal.tore.tweetstokafka;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -13,6 +13,8 @@ import org.apache.kafka.common.errors.WakeupException;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.mongodb.connection.Connection;
 
 /*
  * Good implementation of Kafka consumer, with graceful exit, exeption handling etc. Its from Oreillys Learn Kafka for beginners, and @
@@ -47,6 +49,7 @@ public class KafkaConsumerRunnable implements Runnable {
 		consumer.subscribe(Arrays.asList(topics));
 		
 		tweetsToMongoDB = new TweetsToMongoDB();
+
 	}
 
 	/*
@@ -56,7 +59,10 @@ public class KafkaConsumerRunnable implements Runnable {
 	public void run(){
 		// Poll for new data
 		try {
-			logger.info("Entering into Run, starting to Poll on topic" + consumer);
+			logger.info("Entering run();, testing MongoDB Connection atConnection startup, isMongoAvailable() should throw exception if not");
+			tweetsToMongoDB.isMongoAvailable();
+			
+			logger.info("Starting to Poll on topic" + consumer);
 			while (true) {
 				ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
 				for (ConsumerRecord<String, String> record : records) {
@@ -68,7 +74,9 @@ public class KafkaConsumerRunnable implements Runnable {
 		} catch (WakeupException e) {
 			// Wakeup is normal behavior when .. thread try to terminate
 			logger.info("Received shutwown signal!");
-		} catch (Exception e) {
+			shutdown();
+		}
+		catch (Exception e) {
 			logger.error(e.toString());
 		} 
 		finally {
@@ -84,8 +92,7 @@ public class KafkaConsumerRunnable implements Runnable {
 	public void shutdown() {
 		// interrupt consumer.poll
 		// It will throw a WakeUp Exception and disrupt the while(true) below
-		consumer.wakeup();
-		
+		logger.info("In Shutdown!");
+		consumer.wakeup();	
 	}
-
 }

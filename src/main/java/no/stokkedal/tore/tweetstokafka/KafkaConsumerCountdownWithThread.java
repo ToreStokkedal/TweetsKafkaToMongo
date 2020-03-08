@@ -1,4 +1,4 @@
-package no.stokkedal.tore.TweetsToKafka;
+package no.stokkedal.tore.tweetstokafka;
 /**
  * 
  */
@@ -26,16 +26,16 @@ public class KafkaConsumerCountdownWithThread {
 	 */
 	public static void main(String[] args) {
 		
-		String bootStrapServer = "127.0.0.1:9092";
-		String groupID = "my-eight-application";
-		String topic = "first-topic";
+		String bootStrapServer = "rhel1.local:9092";
+		String groupID = "mongo-client1";
+		String topic = "tweets-topic";
 		
 		new KafkaConsumerCountdownWithThread().run(bootStrapServer, groupID, topic);		
 	}
 	
 	public void run(String bootStrapServer, String groupID, String topic ) {
 		
-		logger.info("Entering with bootstrap" + bootStrapServer + "GroupID, applicationID: " + groupID + " topic " + topic);
+		logger.info("Entering with bootstrap; " + bootStrapServer + ", GroupIDb - applicationID" + "; " + groupID + ", topic; " + topic);
 
 		// Dealing with multiple threads
 		CountDownLatch latch = new CountDownLatch(1);
